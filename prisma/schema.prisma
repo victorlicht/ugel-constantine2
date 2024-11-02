@@ -1,0 +1,135 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model Complaint {
+  id                 Int                @id @default(autoincrement())
+  studentId          String
+  firstName          String
+  lastName           String
+  contactInfo        String             // Either email or phone number
+  sex                Sex                // Male or Female
+  description        String             // Detailed description by the student
+  status             Status              @default(Pending) // Complaint status
+  createdAt          DateTime           @default(now())
+
+  // Relationships for hierarchical filtering
+  studyYear          StudyYear?         @relation(fields: [studyYearId], references: [id])
+  studyYearId        Int?
+
+  specialization     Specialization?    @relation(fields: [specializationId], references: [id])
+  specializationId   Int?
+
+  subCategoryItem    SubCategoryItem     @relation(fields: [subCategoryItemId], references: [id])
+  subCategoryItemId  Int
+
+  subCategory        SubCategory         @relation(fields: [subCategoryId], references: [id])
+  subCategoryId      Int
+
+  mainCategory       MainCategory        @relation(fields: [mainCategoryId], references: [id])
+  mainCategoryId     Int
+}
+
+// Additional models for hierarchy
+
+model MainCategory {
+  id               Int              @id @default(autoincrement())
+  name             String           // E.g., "Pedagogy" or "Social"
+  description      String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  subCategories    SubCategory[]
+
+  Complaint        Complaint[]
+}
+
+model SubCategory {
+  id               Int              @id @default(autoincrement())
+  name             String           // E.g., "Faculties" or "Administration Services"
+  description      String?
+  parentCategory   MainCategory     @relation(fields: [mainCategoryId], references: [id])
+  mainCategoryId   Int
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  items            SubCategoryItem[]
+
+  Complaint        Complaint[]
+}
+
+model SubCategoryItem {
+  id               Int              @id @default(autoincrement())
+  name             String           // E.g., "Faculty of Science" or "Student Transport"
+  description      String?
+  subCategory      SubCategory      @relation(fields: [subCategoryId], references: [id])
+  subCategoryId    Int
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  specializations  Specialization[]
+
+  Complaint        Complaint[]
+}
+
+model Specialization {
+  id               Int              @id @default(autoincrement())
+  name             String           // E.g., "Computer Science"
+  subCategoryItem  SubCategoryItem   @relation(fields: [subCategoryItemId], references: [id])
+  subCategoryItemId Int
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  studyYears       StudyYear[]
+
+  Complaint        Complaint[]
+}
+
+model StudyYear {
+  id               Int              @id @default(autoincrement())
+  yearLabel        String           // E.g., "L1", "L2", "Doctorate"
+  specialization   Specialization   @relation(fields: [specializationId], references: [id])
+  specializationId Int
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  Complaint        Complaint[]
+}
+
+model User {
+  id               Int              @id @default(autoincrement())
+  email            String           @unique
+  password         String           // Hashed password for authentication
+  name             String?
+  sex              Sex
+  title            String           // Title of the user (e.g., Leader, Branch Leader)
+  role             Role             // User role (SuperAdmin, Admin, Moderator, etc.)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+// Enums for Sex and Role
+enum Sex {
+  Male
+  Female
+}
+
+// Enum for User Roles
+enum Role {
+  SuperAdmin
+  Admin
+  Moderator
+  Member
+  Journalist
+}
+
+// Enum for Complaint Status
+enum Status {
+  Pending
+  InProgress
+  Resolved
+  Closed
+}
