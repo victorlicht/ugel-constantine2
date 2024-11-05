@@ -1,11 +1,11 @@
-import { withAuth } from "next-auth/middleware"
+import { withAuth } from "next-auth/middleware";
 
 export default withAuth({
   pages: {
-    signIn: "/admin",
+    signIn: "/auth/login", // Redirect here if unauthenticated
   },
-})
+});
 
 export const config = {
-  matcher: ["/admin/dashboard"],
-}
+  matcher: ["/admin/:path*"], // Apply middleware to all /admin routes
+};
