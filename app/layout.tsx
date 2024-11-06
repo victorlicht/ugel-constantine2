@@ -1,5 +1,6 @@
-import Providers from '@/components/providers';
+import Providers from '@/components/Providers';
 import './globals.css';
+import { Sidebar } from 'lucide-react';
 
 
 
@@ -14,9 +15,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className=''>
       <body className="bg-gray-50 text-gray-800">
-        <main className="container mx-auto px-4">
+        <main>
           <Providers>{children}</Providers></main>
       </body>
     </html>

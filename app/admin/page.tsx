@@ -1,33 +1,14 @@
-"use client"
+import { auth } from "@/lib/auth/config";
+import Redirect from "@/components/Redirect";
+import arabicText from "@/public/locales/arabic.json";
+import { redirect } from "next/navigation";
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+export default async function AdminPage() {
+  const session = await auth();
 
-export default function AdminPage() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  // Button handler to navigate to dashboard
-  const handleDashboardClick = () => {
-    router.push("/admin/dashboard");
-  };
-
-  // Show loading state while session status is being checked
-  if (status === "loading") {
-    return <p>Loading...</p>;
+  if (!session) {
+    return redirect("/auth/login");
+  } else {
+    return <Redirect to="/admin/dashboard" message={arabicText.redirectMessages.redirectDashboard} />;
   }
-
-  return (
-    <div>
-      {status === "authenticated" && session.user ? (
-        <>
-          <h1>Welcome, {session.user.name}</h1>
-          <p>Title: {session.user.title}</p>
-          <button onClick={handleDashboardClick}>Go to Dashboard</button>
-        </>
-      ) : (
-        <p>Redirecting to login...</p>
-      )}
-    </div>
-  );
 }

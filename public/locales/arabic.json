@@ -1,11 +1,97 @@
 {
-    "welcomeBack": "مرحبًا بعودتك",
-    "loginPrompt": "يرجى تسجيل الدخول إلى حساب الإدارة الخاص بك",
-    "footer": {
-      "rightsReserved": "جميع الحقوق محفوظة",
-      "year": "2024",
-      "copyrightSymbol": "©",
-      "org_name": "الإتحاد العام الطلابي الحر - فرع قسنطينة 2"
-    }
+  "welcomeBack": "مرحبا بعودتك",
+  "loginPrompt": "يرجى تسجيل الدخول إلى حساب الإدارة الخاص بك",
+  "footer": {
+    "rightsReserved": "جميع الحقوق محفوظة",
+    "year": "2024",
+    "copyrightSymbol": "©",
+    "org_name": "الاتحاد العام الطلابي الحر - فرع قسنطينة 2"
+  },
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "loginButton": "تسجيل الدخول",
+    "loginFailed": "فشل تسجيل الدخول: بيانات الاعتماد غير صحيحة.",
+    "error": "حدث خطأ أثناء تسجيل الدخول.",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "passwordPlaceholder": "أدخل كلمة المرور الخاصة بك",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة السر",
+    "confirmPassword": "تأكيد كلمة السر",
+    "forgotPassword": "نسيت كلمة السر؟",
+    "rememberMe": "تذكرني",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "userManagement": "إدارة المستخدمين",
+    "userName": "اسم المستخدم",
+    "profile": "الحساب الشخصي",
+    "updateProfile": "تحديث المعلومات الشخصية",
+    "userRoles": "أدوار المستخدمين"
+  },
+  "dashboard": {
+    "home": "الرئيسية",
+    "overview": "نبذة عامة",
+    "analytics": "التحليلات",
+    "statistics": "الإحصائيات",
+    "settings": "الإعدادات",
+    "notifications": "التنبيهات",
+    "systemSettings": "إعدادات النظام",
+    "appearance": "المظهر",
+    "themes": "التصاميم",
+    "helpCenter": "مركز المساعدة",
+    "support": "الدعم",
+    "reports": "التقارير",
+    "activityLog": "سجل النشاط"
+  },
+  "userRoles": {
+    "admin": "مدير",
+    "editor": "محرر",
+    "viewer": "مشاهد",
+    "guest": "ضيف",
+    "contributor": "مساهم",
+    "moderator": "مشرف"
+  },
+  "actions": {
+    "add": "إضافة",
+    "edit": "تحرير",
+    "delete": "حذف",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "search": "بحث",
+    "filter": "تصفية",
+    "upload": "رفع",
+    "download": "تنزيل",
+    "back": "العودة",
+    "next": "التالي",
+    "previous": "السابق",
+    "confirm": "تأكيد",
+    "reset": "إعادة تعيين"
+  },
+  "notifications": {
+    "newMessage": "رسالة جديدة",
+    "newAlert": "تنبيه جديد",
+    "newTask": "مهمة جديدة",
+    "updateAvailable": "تحديث متاح",
+    "viewAll": "عرض الكل",
+    "markAsRead": "وسم كمقروء",
+    "clearAll": "تنظيف الكل"
+  },
+  "validation": {
+    "requiredField": "هذا الحقل مطلوب",
+    "invalidEmail": "بريد إلكتروني غير صحيح",
+    "passwordTooShort": "كلمة السر قصيرة جدا",
+    "passwordMismatch": "كلمات السر غير متطابقة",
+    "invalidInput": "إدخال غير صحيح"
+  },
+  "misc": {
+    "loading": "جار التحميل...",
+    "noData": "لا يوجد بيانات",
+    "sessionExpired": "جلسة العمل انتهت",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsOfService": "شروط الخدمة",
+    "contactUs": "تواصل معنا"
+  },
+  "redirectMessages": {
+        "redirecting": "جاري إعادة التوجيه...",
+        "redirectDashboard": "جاري التوجيه إلى لوحة التحكم..."
+  }
 }
-  

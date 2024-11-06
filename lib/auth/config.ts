@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions, User } from "next-auth";
+import NextAuth, { getServerSession, NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import { verifyPassword } from "./password";
@@ -71,25 +71,31 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-              token.id = user.id;
-              token.role = user.role;
-              token.email = user.email;
-              token.name = user.name;
-              token.title = user.title;
+                token.id = user.id;
+                token.role = user.role;
+                token.email = user.email;
+                token.name = user.name;
+                token.title = user.title;
             }
             return token;
-          },
-          async session({ session, token }) {
+        },
+        async session({ session, token }) {
             if (session.user) {
-              session.user.role = token.role as "Admin" | "SuperAdmin" | "Moderator" | "Member" | "Journalist";
-              session.user.id = token.id as string;
-              session.user.email = token.email as string;
-              session.user.title = token.title as string;
-              session.user.name = token.name as string;
+                session.user.role = token.role as
+                    | "Admin"
+                    | "SuperAdmin"
+                    | "Moderator"
+                    | "Member"
+                    | "Journalist";
+                session.user.id = token.id as string;
+                session.user.email = token.email as string;
+                session.user.title = token.title as string;
+                session.user.name = token.name as string;
             }
             return session;
-          },
         },
-    };
+    },
+};
 
-export const { handlers, signIn, signOut, auth } = NextAuth(authOptions);
+// export const { handlers, signIn, signOut, auth } = NextAuth(authOptions);
+export const auth = () => getServerSession(authOptions);
