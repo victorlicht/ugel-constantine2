@@ -1,30 +1,21 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";  // Import Link from next.js
 import {
-    AudioWaveform,
-    BadgeCheck,
     Bell,
-    BookOpen,
-    Bot,
-    ChevronLeft,
-    ChevronRight,
-    ChevronsUpDown,
-    Command,
-    CreditCard,
+    Home,
+    Settings,
+    Users,
+    MessageSquare,
     Folder,
-    Forward,
-    Frame,
-    GalleryVerticalEnd,
+    FilePlus,
     LogOut,
-    Map,
-    MoreHorizontal,
-    PieChart,
-    Plus,
-    Settings2,
-    Sparkles,
-    SquareTerminal,
-    Trash2,
+    User,
+    Inbox,
+    BellDot,
+    BellRing,
+    ChevronsUpDown,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -37,18 +28,12 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
@@ -57,209 +42,79 @@ import {
     SidebarContent,
     SidebarFooter,
     SidebarGroup,
+    SidebarGroupContent,
     SidebarGroupLabel,
     SidebarHeader,
+    SidebarInput,
     SidebarInset,
     SidebarMenu,
-    SidebarMenuAction,
     SidebarMenuButton,
     SidebarMenuItem,
-    SidebarMenuSub,
-    SidebarMenuSubButton,
-    SidebarMenuSubItem,
     SidebarProvider,
     SidebarRail,
     SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { signOut } from "next-auth/react";
-// This is sample data.
+import Image from "next/image";
+
+// Sample data
 const data = {
     user: {
         name: "شادن",
         email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
-    teams: [
-        {
-            name: "شركة أكمي",
-            logo: GalleryVerticalEnd,
-            plan: "مؤسسة",
-        },
-        {
-            name: "شركة أكمي",
-            logo: AudioWaveform,
-            plan: "ناشئة",
-        },
-        {
-            name: "شركة إيفل",
-            logo: Command,
-            plan: "مجاني",
-        },
-    ],
-    navMain: [
-        {
-            title: "ملعب",
-            icon: SquareTerminal,
-            isActive: true,
-            items: [
-                {
-                    title: "السجل",
-                    url: "/admin/dashboard/settings",
-                },
-                {
-                    title: "المفضلة",
-                    url: "/admin/dashboard/",
-                },
-                {
-                    title: "الإعدادات",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "النماذج",
-            url: "#",
-            icon: Bot,
-            items: [
-                {
-                    title: "جينيسيس",
-                    url: "#",
-                },
-                {
-                    title: "إكسبلورر",
-                    url: "#",
-                },
-                {
-                    title: "كوانتوم",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "التوثيق",
-            url: "#",
-            icon: BookOpen,
-            items: [
-                {
-                    title: "مقدمة",
-                    url: "#",
-                },
-                {
-                    title: "ابدأ الآن",
-                    url: "#",
-                },
-                {
-                    title: "الدروس التعليمية",
-                    url: "#",
-                },
-                {
-                    title: "سجل التحديثات",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "الإعدادات",
-            url: "#",
-            icon: Settings2,
-            items: [
-                {
-                    title: "عام",
-                    url: "#",
-                },
-                {
-                    title: "الفريق",
-                    url: "#",
-                },
-                {
-                    title: "الفوترة",
-                    url: "#",
-                },
-                {
-                    title: "الحدود",
-                    url: "#",
-                },
-            ],
-        },
-    ],
-    projects: [
-        {
-            name: "الهندسة التصميمية",
-            url: "#",
-            icon: Frame,
-        },
-        {
-            name: "المبيعات والتسويق",
-            url: "#",
-            icon: PieChart,
-        },
-        {
-            name: "السفر",
-            url: "#",
-            icon: Map,
-        },
-    ],
+        avatar: "/images/ugel.jpg"
+    }
 };
+const items = [
+    { title: "الرئيسية", url: "/admin/dashboard", icon: Home },
+    { title: "المستخدمون", url: "#", icon: Users },
+    { title: "الإشعارات", url: "#", icon: Bell, hasNotifications: false, notificationCount: 4 },
+    { title: "الشكاوى", url: "#", icon: MessageSquare },
+    { title: "الفئات", url: "#", icon: Folder },
+    { title: "التصنيفات الفرعية", url: "#", icon: FilePlus },
+    { title: "الفروع", url: "/admin", icon: Folder },
+    { title: "المنشورات", url: "/admin/dashboard/settings", icon: FilePlus },
+];
 
-
-export default function Layout({ children, }: { children: React.ReactNode }) {
-    const [activeTeam, setActiveTeam] = React.useState(data.teams[0]);
+export default function Layout({ children }: { children: React.ReactNode }) {
 
     return (
         <SidebarProvider>
             <Sidebar collapsible="icon" side="right">
                 <SidebarContent>
                     <SidebarGroup>
-                        <SidebarGroupLabel>Platform</SidebarGroupLabel>
-                        <SidebarMenu>
-                            {data.navMain.map((item) => (
-                                <Collapsible
-                                    key={item.title}
-                                    asChild
-                                    defaultOpen={item.isActive}
-                                    className="group/collapsible"
-                                >
-                                    <SidebarMenuItem>
-                                        <CollapsibleTrigger asChild>
-                                            <SidebarMenuButton className="bg-pink-100"
-                                                tooltip={item.title}
-                                            >
-                                                {item.icon && <item.icon />}
-                                                <span>{item.title}</span>
-                                                <ChevronLeft className="mr-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                                            </SidebarMenuButton>
-                                        </CollapsibleTrigger>
-                                        <CollapsibleContent>
-                                            <SidebarMenuSub>
-                                                {item.items?.map((subItem) => (
-                                                    <SidebarMenuSubItem
-                                                        key={subItem.title}
-                                                    >
-                                                        <SidebarMenuSubButton
-                                                            asChild
-                                                        >
-                                                            <a
-                                                                href={
-                                                                    subItem.url
-                                                                }
-                                                            >
-                                                                <span>
-                                                                    {
-                                                                        subItem.title
-                                                                    }
-                                                                </span>
-                                                            </a>
-                                                        </SidebarMenuSubButton>
-                                                    </SidebarMenuSubItem>
-                                                ))}
-                                            </SidebarMenuSub>
-                                        </CollapsibleContent>
+                        <SidebarGroupLabel>التطبيق</SidebarGroupLabel>
+                        <SidebarGroupContent>
+                            <SidebarMenu>
+                                {items.map((item) => (
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton asChild>
+                                        <Link href={item.url} legacyBehavior>
+                                            <a>
+                                                <SidebarMenuButton asChild>
+                                                <div className="flex items-center">
+                                                    {/* Conditional render for the icon */}
+                                                    {item.hasNotifications ? <BellDot /> : <item.icon />}
+                                                    <span>{item.title}</span>
+                                                    {/* Conditional render for notifications */}
+                                                    {item.hasNotifications && (
+                                                    <div className="ml-2 flex items-center justify-center rounded-lg bg-red-500 text-white font-semibold text-xs w-5 h-5">
+                                                        {item.notificationCount}
+                                                    </div>
+                                                    )}
+                                                </div>
+                                                </SidebarMenuButton>
+                                            </a>
+                                        </Link>
+
+                                        </SidebarMenuButton>
                                     </SidebarMenuItem>
-                                </Collapsible>
-                            ))}
-                        </SidebarMenu>
+                                ))}
+                            </SidebarMenu>
+                        </SidebarGroupContent>
                     </SidebarGroup>
                 </SidebarContent>
+
                 <SidebarFooter>
                     <SidebarMenu>
                         <SidebarMenuItem>
@@ -269,24 +124,15 @@ export default function Layout({ children, }: { children: React.ReactNode }) {
                                         size="lg"
                                         className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                                     >
-                                        <Avatar className="h-8 w-8 rounded-lg">
-                                            <AvatarImage
-                                                src={data.user.avatar}
-                                                alt={data.user.name}
-                                            />
-                                            <AvatarFallback className="rounded-lg">
-                                                CN
-                                            </AvatarFallback>
+                                        <Avatar className="relative h-8 w-8">
+                                            <AvatarImage className="rounded-lg" src={data.user.avatar} alt={data.user.name} />
+                                            <AvatarFallback className="rounded-lg bg-gray-200">CN</AvatarFallback>
                                         </Avatar>
-                                        <div className="grid flex-1 text-left text-sm leading-tight">
-                                            <span className="truncate font-semibold">
-                                                {data.user.name}
-                                            </span>
-                                            <span className="truncate text-xs">
-                                                {data.user.email}
-                                            </span>
+                                        <div className="grid flex-1 text-right text-sm leading-tight">
+                                            <span className="truncate font-semibold">{data.user.name}</span>
+                                            <span className="truncate text-xs">{data.user.email}</span>
                                         </div>
-                                        <ChevronsUpDown className="ml-auto size-4" />
+                                        <ChevronsUpDown className="mr-auto size-4" />
                                     </SidebarMenuButton>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent
@@ -296,46 +142,28 @@ export default function Layout({ children, }: { children: React.ReactNode }) {
                                     sideOffset={4}
                                 >
                                     <DropdownMenuLabel className="p-0 font-normal">
-                                        <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                                            <Avatar className="h-8 w-8 rounded-lg">
-                                                <AvatarImage
-                                                    src={data.user.avatar}
-                                                    alt={data.user.name}
-                                                />
-                                                <AvatarFallback className="rounded-lg">
-                                                    CN
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <div className="grid flex-1 text-left text-sm leading-tight">
-                                                <span className="truncate font-semibold">
-                                                    {data.user.name}
-                                                </span>
-                                                <span className="truncate text-xs">
-                                                    {data.user.email}
-                                                </span>
+                                        <div className="flex items-center gap-2 px-1 py-1.5 text-right text-sm">
+                                            <div className="grid flex-1 text-right text-sm leading-tight">
+                                                <span className="truncate font-semibold">{data.user.name}</span>
+                                                <span className="truncate text-xs">{data.user.email}</span>
                                             </div>
+                                            <Avatar className="h-8 w-8 rounded-lg">
+                                                <AvatarImage src={data.user.avatar} alt={data.user.name} />
+                                                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                                            </Avatar>
                                         </div>
                                     </DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>
-                                            <Sparkles />
-                                            Upgrade to Pro
+                                            الملف الشخصي {/* Profile */}
+                                            <User />
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
-                                    <DropdownMenuSeparator />
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>
-                                            <BadgeCheck />
-                                            Account
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            <CreditCard />
-                                            Billing
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            <Bell />
-                                            Notifications
+                                            الإعدادات {/* Settings */}
+                                            <Settings />
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
@@ -346,41 +174,37 @@ export default function Layout({ children, }: { children: React.ReactNode }) {
                                             })
                                         }
                                     >
+                                        تسجيل الخروج {/* Log out */}
                                         <LogOut />
-                                        Log out
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </SidebarMenuItem>
                     </SidebarMenu>
                 </SidebarFooter>
+
                 <SidebarRail />
             </Sidebar>
+
             <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
                     <div className="flex items-center gap-2 px-4">
                         <SidebarTrigger className="-ml-1 rotate-180" />
-                        <Separator
-                            orientation="vertical"
-                            className="mr-2 h-4"
-                        />
+                        <Separator orientation="vertical" className="mr-2 h-4" />
                         <Breadcrumb>
                             <BreadcrumbList>
                                 <BreadcrumbItem className="hidden md:block">
-                                    <BreadcrumbLink href="#">
-                                    البيانات
-                                    </BreadcrumbLink>
+                                    <BreadcrumbLink href="#">البيانات</BreadcrumbLink>
                                 </BreadcrumbItem>
                                 <BreadcrumbSeparator className="hidden md:block rotate-180" />
                                 <BreadcrumbItem>
-                                    <BreadcrumbPage>
-                                        جلب البيانات         
-                                    </BreadcrumbPage>
+                                    <BreadcrumbPage>جلب البيانات</BreadcrumbPage>
                                 </BreadcrumbItem>
                             </BreadcrumbList>
                         </Breadcrumb>
                     </div>
                 </header>
+
                 <main className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</main>
             </SidebarInset>
         </SidebarProvider>
