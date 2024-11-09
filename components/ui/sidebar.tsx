@@ -263,12 +263,17 @@ const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
   React.ComponentProps<typeof Button>
 >(({ className, onClick, ...props }, ref) => {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, isMobile } = useSidebar()
+
+  // If not mobile, don't render anything
+  if (!isMobile) {
+    return null;
+  }
 
   return (
     <Button
       ref={ref}
-      data-sidebar="trigger"
+      data-sidebar="trigger" 
       variant="ghost"
       size="icon"
       className={cn("h-7 w-7", className)}
@@ -289,7 +294,12 @@ const SidebarRail = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<"button">
 >(({ className, ...props }, ref) => {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, isMobile } = useSidebar()
+
+  // If not mobile, don't render anything
+  if (!isMobile) {
+    return null;
+  }
 
   return (
     <button

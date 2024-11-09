@@ -17,8 +17,7 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" className=''>
       <body className="bg-gray-50 text-gray-800">
-        <main>
-          <Providers>{children}</Providers></main>
+          <Providers>{children}</Providers>
       </body>
     </html>
   );

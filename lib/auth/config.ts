@@ -5,7 +5,6 @@ import { verifyPassword } from "./password";
 
 export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
-    debug: true,
     session: {
         strategy: "jwt",
     },
