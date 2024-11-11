@@ -264,19 +264,13 @@ const SidebarTrigger = React.forwardRef<
   React.ComponentProps<typeof Button>
 >(({ className, onClick, ...props }, ref) => {
   const { toggleSidebar, isMobile } = useSidebar()
-
-  // If not mobile, don't render anything
-  if (!isMobile) {
-    return null;
-  }
-
   return (
     <Button
       ref={ref}
       data-sidebar="trigger" 
       variant="ghost"
       size="icon"
-      className={cn("h-7 w-7", className)}
+      className={cn("h-7 w-7 rotate-180", className)}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
@@ -295,11 +289,6 @@ const SidebarRail = React.forwardRef<
   React.ComponentProps<"button">
 >(({ className, ...props }, ref) => {
   const { toggleSidebar, isMobile } = useSidebar()
-
-  // If not mobile, don't render anything
-  if (!isMobile) {
-    return null;
-  }
 
   return (
     <button

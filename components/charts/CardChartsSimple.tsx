@@ -57,7 +57,7 @@ const MetricCard: React.FC<Metric> = ({ title, count, change, sub1, sub2 }) => (
       </CardDescription>
     </CardHeader>
     <CardContent>
-      <div className="flex items-baseline justify-start mb-2">
+      <div className="flex items-baseline justify-start">
         <span className="text-4xl font-bold text-gray-900">{count}</span>
         <div className={`flex items-center ${change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
           {change >= 0 ? (

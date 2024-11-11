@@ -1,25 +1,3 @@
-// "use client";
-
-// import * as React from "react";
-// import Link from "next/link";  // Import Link from next.js
-// import {
-//     Bell,
-//     Home,
-//     Settings,
-//     Users,
-//     MessageSquare,
-//     Folder,
-//     FilePlus,
-//     LogOut,
-//     User,
-//     Blocks,
-//     BellDot,
-//     BellRing,
-//     ChevronsUpDown,
-//     Notebook,
-//     SquarePen,
-// } from "lucide-react";
-
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -28,21 +6,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-
-
-
-// export default function Layout({ children }: { children: React.ReactNode }) {
-//     console.log("Building Layout page")
-//     return (
-//         <SidebarProvider>
-            
-            
-//         </SidebarProvider>
-//     );
-// }
-
-
-import { SidebarRail, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { Separator } from "@radix-ui/react-separator";
 
