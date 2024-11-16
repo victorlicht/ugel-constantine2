@@ -8,22 +8,23 @@ import {
   CardDescription 
 } from '@/components/ui/card';
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { getFemaleUsersCount, getMaleUsersCount, getUsersCount } from '@/data/user-data';
 
 interface Metric {
   title: string;
-  count: string;
+  count: Promise<number> | string;
   change: number;
-  sub1: { label: string; count: number };
-  sub2: { label: string; count: number };
+  sub1: { label: string; count: Promise<number> | number };
+  sub2: { label: string; count: Promise<number> | number };
 }
 
 const metrics: Metric[] = [
   { 
     title: 'المستخدمون', 
-    count: '1,234', 
+    count: getUsersCount(), 
     change: 8, 
-    sub1: { label: 'الذكور', count: 740 },
-    sub2: { label: 'الإناث', count: 494 },
+    sub1: { label: 'الذكور', count: getMaleUsersCount() },
+    sub2: { label: 'الإناث', count: getFemaleUsersCount() },
   },
   { 
     title: 'الشكاوى', 
